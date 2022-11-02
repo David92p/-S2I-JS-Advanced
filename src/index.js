@@ -1,0 +1,1 @@
+let variabileProva = 'valore della variabile di prova'
