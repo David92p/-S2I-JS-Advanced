@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;500&family=Yeseva+One&display=swap');
 
-/* font logo  font-family: 'Source Code Pro', monospace; */
-/* font logo  font-family: 'Yeseva One', cursive;*/
+/* font logo my --> font-family: 'Source Code Pro', monospace; */
+/* font logo country --> font-family: 'Yeseva One', cursive;*/
 
 * {
     padding: 0;
@@ -17,24 +17,78 @@ body {
 
 .header-container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
 
     width: 100%;
-    background: rgb(48, 48, 48);
 }
 
 .logo-container {
-    height: 100%;
+    display: flex;
+    justify-content: center;
+
+    width: 100vw;
     margin: 0 auto;
-    color: white;
+    background-color: rgba(48, 48, 48, 0.85);
 }   
 
 .logo-container h1 {
     font-family: 'Yeseva One', cursive;
     font-size: 32px;
-    font-weight: 200;
+    font-weight: 800;
+    
+    color: white;
 }
 
 .logo-container h1 span {
     font-family: 'Source Code Pro', monospace;
-    font-weight: 800;
+    font-weight: 500;
+    color: red
 }
+
+.container-research {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 300px;
+    width: 100vw;
+    border: 1px solid red;
+    /* background: url(); inserire img casuale api  */
+    /* background-size: cover; */
+}
+
+.input {
+    height: 4rem;
+    width: 450px;
+    padding: 0 25px;
+    border: 1px solid black;
+    outline: none;
+    box-sizing: border-box;
+    border-radius: 25px 0 0 25px;
+    margin: 0 1px 0 2px;
+    cursor: pointer;
+}
+
+.btn {
+    height: 4rem;
+    width: 200px;
+    border-radius: 0 25px 25px 0;
+    border: 1px solid black;
+    outline: none;
+    margin: 0 2px 0 0;
+    cursor: pointer;
+    background: #ffc107;
+    color: white;
+    /* outline: none;
+    
+    box-sizing: border-box;
+    transition: .5s; */
+}
+
+.btn:hover {
+    background: #ff5722;
+    transition: 4ms;
+}
+
+
