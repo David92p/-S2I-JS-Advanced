@@ -5,33 +5,42 @@ let cities = [];
 
 for (let city of Object.keys(citylist)){
     cities.push(city)
+    cities.sort()
 }
-cities.sort()
-console.log(cities);
+
+const inputContainer = document.querySelector('.input-container')
 const citiesListElement = document.querySelector('.autocomplete-list')
 const countryInput = document.querySelector('#search')
+const btn = document.querySelector('.btn')
 
-// function loadData(data, element){
-//     element.innerHTML = ""
-//     let innerElement = ""
-//     data.forEach((item) => {
-//         innerElement += `<li>${item}</li>`
-//     });
-//     element.innerHTML = innerElement
-// }
+const loadData = (data, element) => {
+    let select = document.createElement('select')
+    select.classList.add('autocomplete-list')
+    element.append(select)
+    select.innerHTML = ""
+    let innerElement = ""
+    data.forEach((item) => {
+        innerElement += `<option>${item}</option>`
+    });
+    select.innerHTML = innerElement
+}
 
-// function filterData(data, searchText){
-//     return data.filter((el) => el.toLowerCase().includes(searchText.toLowerCase()))
-// }
+const filterData = (data, searchText) => data.filter((el) => el.toLowerCase().includes(searchText.toLowerCase()))
 
 
-// countryInput.addEventListener('input', function (e) {
-//     e.preventDefault()
-//     const filteredData = filterData(cities, countryInput.value)
-//     loadData(filteredData, citiesListElement)
+countryInput.addEventListener('input', function () {
+    if (countryInput.value == ""){
+        loadData([], inputContainer)
+    }else if (!countryInput.value == "") {
+        const filteredData = filterData(cities, countryInput.value)
+        loadData(filteredData, inputContainer)
+    }
+})
+
+// btn.addEventListener('click', () => {
+//     console.log(countryInput.value)
+//     countryInput.innerHTML = ""
 // })
-
-
 
 
 
