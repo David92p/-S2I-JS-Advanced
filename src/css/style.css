@@ -106,17 +106,14 @@ body {
     overflow-y: auto;
 }
 
-.autocomplete-list li {
+.autocomplete-list option {
     color: black;
     padding: 15px;
     width: calc(100% - 30px);
     font-weight: bold;
     cursor: pointer;
-    z-index: 5;
-}
-
-.hidden-list{
-    color: blue;
+    border: none;
+    outline: none;
 }
 
 .btn {
