@@ -12,13 +12,16 @@
             <h1>My<span>Country</span></h1>
         </div>
         <div class="container-research">
-            <div class="input-container">
-                <input type="text" id="search" class="input" name="search" placeholder="enter your city" maxlength="15">
-                <!-- <select class="autocomplete-list">    
-                </select> -->
+            <div>
+                <form autocomplete="off">
+                    <input type="text" id="input" placeholder="enter your city" maxlength="20">
+                    <ul class="list"></ul>
+                </form>
             </div>
-            <input type="button" id="btn" class="btn" value="Search">
-        </div>
+            <div>
+                <button type="button" id="btn" class="btn">Search</button>
+            </div>
+        </div> 
     </div>
 </body>
 </html>
