@@ -1,10 +1,5 @@
 import { getData } from "./api-call"
 
-// -------------------- elements document  -------------------- //
-const btn = document.querySelector('.btn');
-const input = document.getElementById('input');
-
-// -------------------- functions documents  -------------------- //
 
 export const inputCreateList = () => {
     // richiesta dati api tramite valore campo input
@@ -54,19 +49,6 @@ const displayNames = (value) => {
     input.value = value
     removeElements()
 }
-
-
-// export const btnValueCLick = () => {
-//     btn.addEventListener('click', () => {
-//         let items = document.querySelectorAll('.list-items')
-//         if(items.length == 0 && input.value != ""){
-//             getData(input.value).then(res => {
-//                 let data = res.data
-//                 console.log(data);
-//             })
-//         }
-//     })
-// }
 
 // event listener btn e chiamata api per valore inserito
 export const btnValueCLick = () => {
