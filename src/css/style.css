@@ -15,11 +15,14 @@ body {
     list-style: none;
 }
 
+/****************************************************************************************************/
+/*                                            HEADER                                                 /
+/****************************************************************************************************/
+
 .header-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-
     width: 100%;
 }
 
@@ -50,10 +53,10 @@ body {
     display: flex;
     justify-content:center;
     align-items: center;
-    position: absolute;
+    /* position: absolute; */
     height: 450px;
     width: 100vw;
-    border: 1px solid red;
+    overflow: hidden;
     /* background: url(); inserire img casuale api  */
     /* background-size: cover; */
 }
@@ -118,4 +121,14 @@ ul {
 
 .btn:hover {
     background: #c48989;
+}
+
+/****************************************************************************************************/
+/*                                              MAIN                                                 /
+/****************************************************************************************************/
+
+.container-main {
+    height: 500px;
+    width: 100%;
+    border: 5px solid red;
 }
