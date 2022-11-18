@@ -4,9 +4,9 @@
   "description": "App di ricerca informazioni riguardanti i dati della qualità della vita dei paesi nel mondo",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "dev": "webpack server"
+    "dev": "webpack --mode=development",
+    "build": "webpack --mode=production",
+    "serv": "webpack server"
   },
   "repository": {
     "type": "git",
