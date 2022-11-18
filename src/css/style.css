@@ -128,7 +128,14 @@ ul {
 /****************************************************************************************************/
 
 .container-main {
-    height: 500px;
+    display: flex;
+    
     width: 100%;
     border: 5px solid red;
+}
+
+.card {
+    height: 500px;
+    width: 350px;
+    border: 1px solid green;
 }
