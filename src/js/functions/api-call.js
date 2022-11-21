@@ -24,17 +24,14 @@ export const getDataCountry = () => {
         }
     }).then(countryDataList => {
         let linksCountry = []
-        let listIndexCountry = []
-        while (listIndexCountry.length < 5){
+        while (linksCountry.length < 5){
             let n = Math.floor(Math.random() * 253);
-            if (!listIndexCountry.includes(n)){
-                listIndexCountry.push(n)
+            if (!linksCountry.includes(countryDataList[n])){
+                linksCountry.push(countryDataList[n].href)
             }
         };
-        listIndexCountry.forEach(el => {
-            linksCountry.push(countryDataList[el])
-        })
         console.log(linksCountry);
+        
     })
 };
 
