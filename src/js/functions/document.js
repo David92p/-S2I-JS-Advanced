@@ -1,9 +1,9 @@
-import { getData } from "./api-call"
+import { getDataCity } from "./api-call"
 
 
 export const inputCreateList = () => {
     // richiesta dati api tramite valore campo input
-    getData(input.value)
+    getDataCity(input.value)
     // gestione dati e inserimento nome citta all'interno di un []
     .then(response => {
         const data = response.data
@@ -54,7 +54,7 @@ const displayNames = (value) => {
 export const btnValueCLick = () => {
     let items = document.querySelectorAll('.list-items')
     if(items.length == 0 && input.value != ""){
-        getData(input.value).then(res => {
+        getDataCity(input.value).then(res => {
             let data = res.data
             console.log(data);
         })
