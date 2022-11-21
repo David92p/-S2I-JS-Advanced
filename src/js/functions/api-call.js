@@ -23,18 +23,18 @@ export const getDataCountry = () => {
             return countryDataList  
         }
     }).then(countryDataList => {
-        
-        console.log(n);
-        console.log(countryDataList[n]);
-        // countryDataList.forEach(country => {
-        //     console.log(country);
-        // });
-        let link = []
-        for(let ì=0; i<5; i++){
+        let linksCountry = []
+        let listIndexCountry = []
+        while (listIndexCountry.length < 5){
             let n = Math.floor(Math.random() * 253);
-            link.push(countryDataList[n])
-        }
-        console.log(link);
+            if (!listIndexCountry.includes(n)){
+                listIndexCountry.push(n)
+            }
+        };
+        listIndexCountry.forEach(el => {
+            linksCountry.push(countryDataList[el])
+        })
+        console.log(linksCountry);
     })
 };
 
