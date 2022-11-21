@@ -55,6 +55,7 @@ export const btnValueCLick = () => {
     let items = document.querySelectorAll('.list-items')
     if(items.length == 0 && input.value != ""){
         getDataCity(input.value).then(res => {
+            input.value = ""
             let data = res.data
             console.log(data);
         })
