@@ -1,7 +1,8 @@
 import '../css/style.css'
 
+
 import { inputCreateList , btnValueCLick } from './functions/document'
-import { getDataCountry } from './functions/api-call';
+import { getCasualCity } from './functions/api-call';
 
 const input = document.getElementById('input');
 const btn = document.querySelector('.btn');
@@ -18,8 +19,8 @@ document.addEventListener('keypress', (e) => {
     }
 });
 
-getDataCountry()
 
+//console.log(getCasualCity().then(response => console.log(response.data)));
 
 
 
