@@ -14,16 +14,17 @@ Object.keys(cities).forEach(city => {
 const casualCity = countriesNames[Math.floor(Math.random() * 265)]
 
 // link api
-const api = 'https://api.teleport.org/api/';
-// link api con valore input
-const apiLinkCity = 'https://api.teleport.org/api/cities/?search=';
+// const api = 'https://api.teleport.org/api/';
+
+const API_KEY = process.env.API_KEY;
+
 // link api country
-const apiLinkCountry = 'https://api.teleport.org/api/countries/';
+//const apiLinkCountry = 'https://api.teleport.org/api/countries/';
 
 
 // chiamata Api tramite valore di input
 export const getDataCity = (city) => {
-    const request = axios.get(apiLinkCity+city)
+    const request = axios.get(API_KEY+city)
     return request
 };
 
