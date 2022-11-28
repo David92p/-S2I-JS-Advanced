@@ -1,17 +1,16 @@
 import '../css/style.css'
 
-
-import { inputCreateList , btnValueCLick } from './functions/document'
+import { inputCreateList , btnValueCLick, casualImgCity} from './functions/document'
 import { getCasualCity } from './functions/api-call';
 
 const input = document.getElementById('input');
 const btn = document.querySelector('.btn');
 
 
-//inputCreateList()
+// inputCreateList()
 input.addEventListener("keyup", inputCreateList);
 
-//Listener input entered by the user
+// Listener input da parte dell'utente
 btn.addEventListener('click', btnValueCLick);
 document.addEventListener('keypress', (e) => {
     if (e.code == "Enter"){
@@ -19,9 +18,6 @@ document.addEventListener('keypress', (e) => {
     }
 });
 
-
-//console.log(getCasualCity().then(response => console.log(response.data)));
-
-
-
+// funzione di caricamento img casuale sfondo header
+casualImgCity()
 
