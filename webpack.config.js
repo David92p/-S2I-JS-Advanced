@@ -19,7 +19,10 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html'
+            title: 'Homepage',
+            template: './src/index.html',
+            inject: 'head',
+            scriptLoading: 'defer'
         }),
         new Dotenv(),
     ],
