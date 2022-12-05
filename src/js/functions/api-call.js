@@ -2,7 +2,7 @@ import axios from 'axios';
 // import Chart from 'chart.js/auto'; //lib utile per grafico di dati della
 const _ = require('lodash')
 
-import cities from '../json/citylist.json'
+import cities from '../../json/citylist.json'
 
 // cicliamo il Json per avere una lista di nome delle città
 const countriesNames = []
