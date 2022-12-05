@@ -1,6 +1,15 @@
 import { getDataCity, getCasualCity} from "./api-call"
 import axios from 'axios';
 
+import cities from '../../json/citylist.json'
+
+// cicliamo il Json per avere una lista di nome delle città
+export const countriesNames = []
+Object.keys(cities).forEach(city => {
+    countriesNames.push(city)
+});
+
+
 // La funzione effettua una chiamata all'api tramite un valore inserito dall'utente
 // La funzione manipola il dom creando gli <li></li> necessari in base al numero dei dati ricevuti dalla api fino ad un massimo di 5 elementi
 export const inputCreateList = () => {
@@ -10,34 +19,35 @@ export const inputCreateList = () => {
     .then(response => {
         const data = response.data
         const cityData = data._embedded["city:search-results"]
-        const listCity = []
-        cityData.forEach(element => {
-            listCity.push(element.matching_full_name)
-        });
-        return listCity.slice(0,5);
+        console.log(cityData);
+        // const listCity = []
+        // cityData.forEach(element => {
+        //     listCity.push(element.matching_full_name)
+        // });
+        // return listCity.slice(0,5); 
     })
     // gestione dati e inserimento valore tramite click
-    .then(listCity => {
-        // puliamo inzialemente la lista <ul> da possibili <li> creati in precedenza 
-        removeElements();
-        // cicliamo le possibili città della lista composta dalla funzione async getData
-        for (let city of listCity){
-            // condizione per la creazione dei vari <li>
-            if(input.value != ""){
-                // creazione <li>
-                let listItem = document.createElement('li');
-                // inseriamo style ed eventi click all'interno del <li> creato 
-                listItem.classList.add("list-items");
-                listItem.style.cursor ="pointer";
-                listItem.addEventListener("click", () => displayNames(city));
-                // inserimento valore input dentro <li> elemento
-                let word = "<b>" + city.substr(0, input.value.length) + "</b>";
-                word += city.substr(input.value.length);
-                listItem.innerHTML = word;
-                document.querySelector(".list").appendChild(listItem);
-            }
-        }
-    })
+    // .then(listCity => {
+    //     // puliamo inzialemente la lista <ul> da possibili <li> creati in precedenza 
+    //     removeElements();
+    //     // cicliamo le possibili città della lista composta dalla funzione async getData
+    //     for (let city of listCity){
+    //         // condizione per la creazione dei vari <li>
+    //         if(input.value != ""){
+    //             // creazione <li>
+    //             let listItem = document.createElement('li');
+    //             // inseriamo style ed eventi click all'interno del <li> creato 
+    //             listItem.classList.add("list-items");
+    //             listItem.style.cursor ="pointer";
+    //             listItem.addEventListener("click", () => displayNames(city));
+    //             // inserimento valore input dentro <li> elemento
+    //             let word = "<b>" + city.substr(0, input.value.length) + "</b>";
+    //             word += city.substr(input.value.length);
+    //             listItem.innerHTML = word;
+    //             document.querySelector(".list").appendChild(listItem);
+    //         }
+    //     }
+    // })
 } 
 
 //funzione elimina <li> da container <ul>
@@ -56,11 +66,41 @@ const displayNames = (value) => {
 export const btnValueCLick = () => {
     let items = document.querySelectorAll('.list-items')
     if(items.length == 0 && input.value != ""){
-        getDataCity(input.value).then(res => {
-            input.value = ""
-            let data = res.data
-            console.log(data);
-        })
+        getDataCity(input.value)
+        .then(res => {
+        input.value = ""
+        const data = res.data
+        if (data.count == 0){
+            // Inserire codice per ricerca città fallita
+            console.log('risultato non trovato');
+        } 
+        else {
+            const apiCity = data._embedded["city:search-results"][0]._links["city:item"].href
+            const request = axios.get(apiCity)
+            request.then(response => {
+                const dataFinal = []
+                const name = response.data.name
+                const population = response.data.population
+                dataFinal.push({nameCity: name})
+                dataFinal.push({population: population})
+                console.log(response.data);
+                console.log(response);
+                for (let key of Object.keys(response.data._links)){
+                    if (key == "city:urban_area"){
+                        const cityUrbanAreaApi = response.data._links["city:urban_area"].href
+                        const request = axios.get(cityUrbanAreaApi)
+                        console.log(cityUrbanAreaApi);
+                    }
+                }
+                // request2.then(response => {
+                //     console.log(response.data);
+                // })
+            })
+        }
+    })
+    }
+    else {
+        // eccezione
     }
 };
 
