@@ -83,42 +83,66 @@ export const btnValueCLick = () => {
     if(items.length == 0 && input.value != ""){
         getDataCity(input.value)
         .then(res => {
-        input.value = ""
-        const data = res.data
-        if (data.count == 0){
-            // Inserire codice per ricerca città fallita
-            console.log('risultato non trovato');
-        } 
-        else {
-            const apiCity = data._embedded["city:search-results"][0]._links["city:item"].href
-            const request = axios.get(apiCity)
-            request.then(response => {
-                const dataFinal = []
-                const name = response.data.name
-                const population = response.data.population
-                dataFinal.push({nameCity: name})
-                dataFinal.push({population: population})
-                console.log(response.data);
-                console.log(response);
-                for (let key of Object.keys(response.data._links)){
-                    if (key == "city:urban_area"){
-                        const cityUrbanAreaApi = response.data._links["city:urban_area"].href
-                        const request = axios.get(cityUrbanAreaApi)
-                        console.log(cityUrbanAreaApi);
+            input.value = ""
+            // condizione in caso di ricerca città fallita
+            if (res.status != 200 && res.request.readyState != 4){
+                // Inserire codice per ricerca città fallita
+                console.log('risultato non trovato');
+            }
+            else {
+                // link api città ricercata dall'utente
+                const apiCity = res.data._embedded["city:search-results"][0]._links["city:item"].href
+                // richiesta dati
+                const request = axios.get(apiCity)
+                // gestione dati restituiti dall'api
+                request.then(res => {
+                    // Inserire codice per ricerca città fallita
+                    if (res.status != 200 && res.request.readyState != 4){
+                        console.log('risultato non trovato');
                     }
-                }
-                // request2.then(response => {
-                //     console.log(response.data);
-                // })
-            })
-        }
+                    else {
+                        // link api ricerca caratteristiche città
+                        const linkUrbanCityArea = res.data._links["city:urban_area"].href
+                        // richiesta dati
+                        console.log(linkUrbanCityArea);
+                        const request = axios.get(linkUrbanCityArea)
+                        //////////////////////////////////////////////////////
+                        // INSERIRE CODICE DI COMPILAZIONE {} DA UTILIZZARE //
+                        //////////////////////////////////////////////////////
+                    }
+                })
+            } 
+        // else {
+        //     const apiCity = data._embedded["city:search-results"][0]._links["city:item"].href
+        //     const request = axios.get(apiCity)
+        //     request.then(response => {
+        //         const dataFinal = []
+        //         const name = response.data.name
+        //         const population = response.data.population
+        //         dataFinal.push({nameCity: name})
+        //         dataFinal.push({population: population})
+        //         console.log(response.data);
+        //         console.log(response);
+        //         for (let key of Object.keys(response.data._links)){
+        //             if (key == "city:urban_area"){
+        //                 const cityUrbanAreaApi = response.data._links["city:urban_area"].href
+        //                 const request = axios.get(cityUrbanAreaApi)
+        //                 console.log(cityUrbanAreaApi);
+        //             }
+        //         }
+        //         // request2.then(response => {
+        //         //     console.log(response.data);
+        //         // })
+        //     })
+        // }
     })
     }
-    else {
-        // eccezione
-    }
+    // else {
+    //     // eccezione
+    // }
 };
 
+// funzione di ricerca img città casuale inserita come sfondo header
 export const casualImgCity = () => {
     getCasualCity()
     .then(response => {
