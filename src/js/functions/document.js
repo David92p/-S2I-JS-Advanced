@@ -104,11 +104,73 @@ export const btnValueCLick = () => {
                         // link api ricerca caratteristiche città
                         const linkUrbanCityArea = res.data._links["city:urban_area"].href
                         // richiesta dati
-                        console.log(linkUrbanCityArea);
                         const request = axios.get(linkUrbanCityArea)
-                        //////////////////////////////////////////////////////
-                        // INSERIRE CODICE DI COMPILAZIONE {} DA UTILIZZARE //
-                        //////////////////////////////////////////////////////
+                        request.then(res => {
+                            // Condizione request fallita
+                            if (res.status != 200 && res.request.readyState != 4){
+                                console.log('risultato non trovato');
+                            }
+                            else {
+                                // obj contenente i dati finali da mettere a grafico
+                                const dataFinal = {}
+                                // dati iniziali inseriti {nome, continente, sindaco}
+                                dataFinal.name = res.data.full_name
+                                dataFinal.continent = res.data.continent
+                                dataFinal.mayor = res.data.mayor
+                                // obj di partenza dove effettuare le richieste ai link api
+                                const linkInitial = res.data._links
+                                // link api per dettagli città (lavoro, clima, sanità ecc)
+                                const detailsCity = linkInitial["ua:details"].href
+                                // richiesta dati dettagli città
+                                const requestDetailCity = axios.get(detailsCity)
+                                .then(res => {
+                                    // condizione in caso di ricerca città fallita
+                                    if (res.status != 200 && res.request.readyState != 4){
+                                        // Inserire codice per ricerca città fallita
+                                        console.log('risultato non trovato');
+                                    }
+                                    else {
+                                        // inseriamo i dati dei dettagli della città all'interno del obj finale 
+                                        dataFinal.detailsCity = res.data["categories"]
+                                        // link api per foto città
+                                        const imgCity = linkInitial["ua:images"].href
+                                        // richiesta dati foto città
+                                        const requestImgCity = axios.get(imgCity)
+                                        .then(res => {
+                                            // condizione in caso di ricerca città fallita
+                                            if (res.status != 200 && res.request.readyState != 4){
+                                                // Inserire codice per ricerca città fallita
+                                                console.log('risultato non trovato');
+                                            }
+                                            else {
+                                                // inseriamo la foto della città all'interno del obj finale 
+                                                dataFinal.imgCity = res.data.photos[0].image.web
+                                                // link api città nell'area 
+                                                const generalCities = linkInitial["ua:cities"].href
+                                                // richiesta dati 
+                                                const requestGeneralCities = axios.get(generalCities)
+                                                .then(res => {
+                                                    // condizione in caso di ricerca città fallita
+                                                    if (res.status != 200 && res.request.readyState != 4){
+                                                        // Inserire codice per ricerca città fallita
+                                                        console.log('risultato non trovato');
+                                                    }
+                                                    else {
+                                                        dataFinal.generalCities = res.data._links["city:items"]
+                                                        console.log(dataFinal);
+                                                    }
+                                                })
+                                            }
+                                        })
+                                    }
+                                })
+                                
+                                // const detailsCity = res.data._links["ua:details"].href
+                                // const imgCity = res.data._links["ua:images"].href
+                                // const primaryCities = res.data._links["ua:primary-cities"]
+                                
+                            }
+                        })
                     }
                 })
             } 
