@@ -145,18 +145,29 @@ export const btnValueCLick = () => {
                                             else {
                                                 // inseriamo la foto della città all'interno del obj finale 
                                                 dataFinal.imgCity = res.data.photos[0].image.web
-                                                // link api città nell'area 
+                                                // link api città suburbana
                                                 const generalCities = linkInitial["ua:cities"].href
                                                 // richiesta dati 
                                                 const requestGeneralCities = axios.get(generalCities)
                                                 .then(res => {
-                                                    // condizione in caso di ricerca città fallita
+                                                // condizione in caso di ricerca città fallita
                                                     if (res.status != 200 && res.request.readyState != 4){
                                                         // Inserire codice per ricerca città fallita
                                                         console.log('risultato non trovato');
                                                     }
                                                     else {
-                                                        dataFinal.generalCities = res.data._links["city:items"]
+                                                        // lista dati città suburbane
+                                                        const listCities = res.data._links["city:items"]
+                                                        const requestsSuburbanCities = []
+                                                        // cicliamo la lista effettuando una richiesta async ad ogni città suburbana
+                                                        listCities.forEach(city => {
+                                                            const suburbanCity = axios.get(city.href)
+                                                            suburbanCity.then(res => {
+                                                                requestsSuburbanCities.push(res.data)
+                                                            })
+                                                        }) 
+                                                        dataFinal.suburbansCities = requestsSuburbanCities
+                                                        //const salaries = linkInitial["ua:salaries"].href
                                                         console.log(dataFinal);
                                                     }
                                                 })
