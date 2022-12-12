@@ -93,9 +93,9 @@ export const btnValueCLick = () => {
                 // link api città ricercata dall'utente
                 const apiCity = res.data._embedded["city:search-results"][0]._links["city:item"].href
                 // richiesta dati
-                const request = axios.get(apiCity)
+                axios.get(apiCity)
                 // gestione dati restituiti dall'api
-                request.then(res => {
+                .then(res => {
                     // Inserire codice per ricerca città fallita
                     if (res.status != 200 && res.request.readyState != 4){
                         console.log('risultato non trovato');
@@ -104,8 +104,8 @@ export const btnValueCLick = () => {
                         // link api ricerca caratteristiche città
                         const linkUrbanCityArea = res.data._links["city:urban_area"].href
                         // richiesta dati
-                        const request = axios.get(linkUrbanCityArea)
-                        request.then(res => {
+                        axios.get(linkUrbanCityArea)
+                        .then(res => {
                             // Condizione request fallita
                             if (res.status != 200 && res.request.readyState != 4){
                                 console.log('risultato non trovato');
@@ -122,7 +122,7 @@ export const btnValueCLick = () => {
                                 // link api per dettagli città (lavoro, clima, sanità ecc)
                                 const detailsCity = linkInitial["ua:details"].href
                                 // richiesta dati dettagli città
-                                const requestDetailCity = axios.get(detailsCity)
+                                axios.get(detailsCity)
                                 .then(res => {
                                     // condizione in caso di ricerca città fallita
                                     if (res.status != 200 && res.request.readyState != 4){
@@ -135,7 +135,7 @@ export const btnValueCLick = () => {
                                         // link api per foto città
                                         const imgCity = linkInitial["ua:images"].href
                                         // richiesta dati foto città
-                                        const requestImgCity = axios.get(imgCity)
+                                        axios.get(imgCity)
                                         .then(res => {
                                             // condizione in caso di ricerca città fallita
                                             if (res.status != 200 && res.request.readyState != 4){
@@ -148,7 +148,7 @@ export const btnValueCLick = () => {
                                                 // link api città suburbana
                                                 const generalCities = linkInitial["ua:cities"].href
                                                 // richiesta dati 
-                                                const requestGeneralCities = axios.get(generalCities)
+                                                axios.get(generalCities)
                                                 .then(res => {
                                                 // condizione in caso di ricerca città fallita
                                                     if (res.status != 200 && res.request.readyState != 4){
@@ -156,63 +156,69 @@ export const btnValueCLick = () => {
                                                         console.log('risultato non trovato');
                                                     }
                                                     else {
-                                                        // lista dati città suburbane
+                                                        // link api città suburbane
                                                         const listCities = res.data._links["city:items"]
-                                                        const requestsSuburbanCities = []
+                                                        // array di resposta delle città suburbane
+                                                        const suburbanCities = []
                                                         // cicliamo la lista effettuando una richiesta async ad ogni città suburbana
                                                         listCities.forEach(city => {
-                                                            const suburbanCity = axios.get(city.href)
-                                                            suburbanCity.then(res => {
-                                                                requestsSuburbanCities.push(res.data)
-                                                            })
+                                                            // richiesta dati di ogni città suburbana
+                                                            axios.get(city.href)
+                                                            // inseriamo i dati all'interno della [] di res
+                                                            .then(res => suburbanCities.push(res.data))
                                                         }) 
-                                                        dataFinal.suburbansCities = requestsSuburbanCities
-                                                        //const salaries = linkInitial["ua:salaries"].href
-                                                        console.log(dataFinal);
+                                                        // inseriamo [] con i dati all'interno del nostro obj finale
+                                                        dataFinal.suburbansCities = suburbanCities
+                                                        // link api lavoro e salario
+                                                        const salaries = linkInitial["ua:salaries"].href
+                                                        // richiesta dati 
+                                                        axios.get(salaries)
+                                                        .then(res => {
+                                                            // condizione in caso di ricerca città fallita
+                                                            if (res.status != 200 && res.request.readyState != 4){
+                                                                // Inserire codice per ricerca città fallita
+                                                                console.log('risultato non trovato');
+                                                            }
+                                                            else {
+                                                                // inseriamo i dati richiesti nel nostro obj finale
+                                                                dataFinal.salaries = res.data["salaries"]
+                                                                // link score finale
+                                                                const finalScore = linkInitial["ua:scores"].href
+                                                                // richiesta dati
+                                                                axios.get(finalScore)
+                                                                .then(res => {
+                                                                    // condizione in caso di ricerca città fallita
+                                                                    if (res.status != 200 && res.request.readyState != 4){
+                                                                        // Inserire codice per ricerca città fallita
+                                                                        console.log('risultato non trovato');
+                                                                    }
+                                                                    else {
+                                                                        // inseriamo i dati all'interno del nostro obj finale nel seguente ordine "categoria con singolo punteggio - breve descrizione - punteggio totale"
+                                                                        dataFinal.scores = res.data["categories"]
+                                                                        dataFinal.summary = res.data["summary"]
+                                                                        dataFinal.finalScore = res.data["teleport_city_score"]
+                                                                    }
+                                                                    console.log(dataFinal);
+                                                                })
+                                                            }
+                                                        })
                                                     }
                                                 })
                                             }
                                         })
                                     }
                                 })
-                                
-                                // const detailsCity = res.data._links["ua:details"].href
-                                // const imgCity = res.data._links["ua:images"].href
-                                // const primaryCities = res.data._links["ua:primary-cities"]
-                                
                             }
                         })
                     }
                 })
             } 
-        // else {
-        //     const apiCity = data._embedded["city:search-results"][0]._links["city:item"].href
-        //     const request = axios.get(apiCity)
-        //     request.then(response => {
-        //         const dataFinal = []
-        //         const name = response.data.name
-        //         const population = response.data.population
-        //         dataFinal.push({nameCity: name})
-        //         dataFinal.push({population: population})
-        //         console.log(response.data);
-        //         console.log(response);
-        //         for (let key of Object.keys(response.data._links)){
-        //             if (key == "city:urban_area"){
-        //                 const cityUrbanAreaApi = response.data._links["city:urban_area"].href
-        //                 const request = axios.get(cityUrbanAreaApi)
-        //                 console.log(cityUrbanAreaApi);
-        //             }
-        //         }
-        //         // request2.then(response => {
-        //         //     console.log(response.data);
-        //         // })
-        //     })
-        // }
-    })
+        })
     }
-    // else {
-    //     // eccezione
-    // }
+    else {
+        // eccezione
+        console.log('risultato non trovato');
+    }
 };
 
 // funzione di ricerca img città casuale inserita come sfondo header
