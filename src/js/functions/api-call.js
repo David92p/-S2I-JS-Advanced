@@ -19,8 +19,8 @@ const api = 'https://api.teleport.org/api/';
 const API_KEY = process.env.API_KEY;
 
 // chiamata Api tramite valore di input
-export const getDataCity = (city) => {
-    const request = axios.get(API_KEY+city)
+export async function getDataCity(city) {
+    const request = await axios.get(API_KEY+city)
     return request
 };
 
