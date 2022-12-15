@@ -1,8 +1,12 @@
 import axios from 'axios';
-// import async function 
-import { getCasualCity, getDataCity } from "./api-call";
+import { Chart } from 'chart.js/auto'
+// import response from api
+import { getCasualCity } from "./api-call";
+// import async functions
+import { dataCollection } from "./async"
 // import const lista città
 import { countriesNames } from './api-call';
+
 
 // La funzione estrapola una lista di città dalla lista "countriesNames" in base al valore inserito dall'utente
 const createListCities = (value) => {
@@ -77,150 +81,6 @@ const displayNames = (value) => {
     removeElements()
 };
 
-// event listener btn e chiamata api per valore inserito
-export const btnValueCLick = () => {
-    let items = document.querySelectorAll('.list-items')
-    if(items.length == 0 && input.value != ""){
-        getDataCity(input.value)
-        .then(res => {
-            input.value = ""
-            // condizione in caso di ricerca città fallita
-            if (res.status != 200 && res.request.readyState != 4){
-                // Inserire codice per ricerca città fallita
-                console.log('risultato non trovato');
-            }
-            else {
-                // link api città ricercata dall'utente
-                const apiCity = res.data._embedded["city:search-results"][0]._links["city:item"].href
-                // richiesta dati
-                axios.get(apiCity)
-                // gestione dati restituiti dall'api
-                .then(res => {
-                    // Inserire codice per ricerca città fallita
-                    if (res.status != 200 && res.request.readyState != 4){
-                        console.log('risultato non trovato');
-                    }
-                    else {
-                        // link api ricerca caratteristiche città
-                        const linkUrbanCityArea = res.data._links["city:urban_area"].href
-                        // richiesta dati
-                        axios.get(linkUrbanCityArea)
-                        .then(res => {
-                            // Condizione request fallita
-                            if (res.status != 200 && res.request.readyState != 4){
-                                console.log('risultato non trovato');
-                            }
-                            else {
-                                // obj contenente i dati finali da mettere a grafico
-                                const dataFinal = {}
-                                // dati iniziali inseriti {nome, continente, sindaco}
-                                dataFinal.name = res.data.full_name
-                                dataFinal.continent = res.data.continent
-                                dataFinal.mayor = res.data.mayor
-                                // obj di partenza dove effettuare le richieste ai link api
-                                const linkInitial = res.data._links
-                                // link api per dettagli città (lavoro, clima, sanità ecc)
-                                const detailsCity = linkInitial["ua:details"].href
-                                // richiesta dati dettagli città
-                                axios.get(detailsCity)
-                                .then(res => {
-                                    // condizione in caso di ricerca città fallita
-                                    if (res.status != 200 && res.request.readyState != 4){
-                                        // Inserire codice per ricerca città fallita
-                                        console.log('risultato non trovato');
-                                    }
-                                    else {
-                                        // inseriamo i dati dei dettagli della città all'interno del obj finale 
-                                        dataFinal.detailsCity = res.data["categories"]
-                                        // link api per foto città
-                                        const imgCity = linkInitial["ua:images"].href
-                                        // richiesta dati foto città
-                                        axios.get(imgCity)
-                                        .then(res => {
-                                            // condizione in caso di ricerca città fallita
-                                            if (res.status != 200 && res.request.readyState != 4){
-                                                // Inserire codice per ricerca città fallita
-                                                console.log('risultato non trovato');
-                                            }
-                                            else {
-                                                // inseriamo la foto della città all'interno del obj finale 
-                                                dataFinal.imgCity = res.data.photos[0].image.web
-                                                // link api città suburbana
-                                                const generalCities = linkInitial["ua:cities"].href
-                                                // richiesta dati 
-                                                axios.get(generalCities)
-                                                .then(res => {
-                                                // condizione in caso di ricerca città fallita
-                                                    if (res.status != 200 && res.request.readyState != 4){
-                                                        // Inserire codice per ricerca città fallita
-                                                        console.log('risultato non trovato');
-                                                    }
-                                                    else {
-                                                        // link api città suburbane
-                                                        const listCities = res.data._links["city:items"]
-                                                        // array di resposta delle città suburbane
-                                                        const suburbanCities = []
-                                                        // cicliamo la lista effettuando una richiesta async ad ogni città suburbana
-                                                        listCities.forEach(city => {
-                                                            // richiesta dati di ogni città suburbana
-                                                            axios.get(city.href)
-                                                            // inseriamo i dati all'interno della [] di res
-                                                            .then(res => suburbanCities.push(res.data))
-                                                        }) 
-                                                        // inseriamo [] con i dati all'interno del nostro obj finale
-                                                        dataFinal.suburbansCities = suburbanCities
-                                                        // link api lavoro e salario
-                                                        const salaries = linkInitial["ua:salaries"].href
-                                                        // richiesta dati 
-                                                        axios.get(salaries)
-                                                        .then(res => {
-                                                            // condizione in caso di ricerca città fallita
-                                                            if (res.status != 200 && res.request.readyState != 4){
-                                                                // Inserire codice per ricerca città fallita
-                                                                console.log('risultato non trovato');
-                                                            }
-                                                            else {
-                                                                // inseriamo i dati richiesti nel nostro obj finale
-                                                                dataFinal.salaries = res.data["salaries"]
-                                                                // link score finale
-                                                                const finalScore = linkInitial["ua:scores"].href
-                                                                // richiesta dati
-                                                                axios.get(finalScore)
-                                                                .then(res => {
-                                                                    // condizione in caso di ricerca città fallita
-                                                                    if (res.status != 200 && res.request.readyState != 4){
-                                                                        // Inserire codice per ricerca città fallita
-                                                                        console.log('risultato non trovato');
-                                                                    }
-                                                                    else {
-                                                                        // inseriamo i dati all'interno del nostro obj finale nel seguente ordine "categoria con singolo punteggio - breve descrizione - punteggio totale"
-                                                                        dataFinal.scores = res.data["categories"]
-                                                                        dataFinal.summary = res.data["summary"]
-                                                                        dataFinal.finalScore = res.data["teleport_city_score"]
-                                                                    }
-                                                                    console.log(dataFinal);
-                                                                })
-                                                            }
-                                                        })
-                                                    }
-                                                })
-                                            }
-                                        })
-                                    }
-                                })
-                            }
-                        })
-                    }
-                })
-            } 
-        })
-    }
-    else {
-        // eccezione
-        console.log('risultato non trovato');
-    }
-};
-
 // funzione di ricerca img città casuale inserita come sfondo header
 export const casualImgCity = () => {
     getCasualCity()
@@ -244,3 +104,35 @@ export const casualImgCity = () => {
     })
 }
 
+export async function createCanva(){
+    console.log('primo');
+    let x = await dataCollection()
+    console.log('secondo');
+    console.log(x);
+    
+    // const data = [
+    //     { year: 2010, count: 10 },
+    //     { year: 2011, count: 20 },
+    //     { year: 2012, count: 15 },
+    //     { year: 2013, count: 25 },
+    //     { year: 2014, count: 22 },
+    //     { year: 2015, count: 30 },
+    //     { year: 2016, count: 28 },
+    //   ];
+    //   new Chart(
+    //     document.getElementById('myCanva'),
+    //     {
+    //       type: 'bar',
+    //       data: {
+    //         labels: data.map(row => row.year),
+    //         datasets: [
+    //           {
+    //             label: 'Acquisitions by year',
+    //             data: data.map(row => row.count)
+    //           }
+    //         ]
+    //       }
+    //     }
+    //   );
+    // console.log(data2);
+}
