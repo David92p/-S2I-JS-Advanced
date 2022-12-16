@@ -5,7 +5,7 @@ import { getCasualCity } from "./api-call";
 // import async functions
 import { dataCollection } from "./async"
 // import const lista città
-import { countriesNames } from './api-call';
+import { countriesNames, casualCity } from './api-call';
 
 
 // La funzione estrapola una lista di città dalla lista "countriesNames" in base al valore inserito dall'utente
@@ -70,7 +70,7 @@ export const inputCreateList = () => {
 };
 
 //funzione elimina <li> da container <ul>
-const removeElements = () => {
+export const removeElements = () => {
     const items = document.querySelectorAll('.list-items');
     items.forEach(el => el.remove())
 };
@@ -104,35 +104,48 @@ export const casualImgCity = () => {
     })
 }
 
-export async function createCanva(){
-    console.log('primo');
-    let x = await dataCollection()
-    console.log('secondo');
-    console.log(x);
-    
-    // const data = [
-    //     { year: 2010, count: 10 },
-    //     { year: 2011, count: 20 },
-    //     { year: 2012, count: 15 },
-    //     { year: 2013, count: 25 },
-    //     { year: 2014, count: 22 },
-    //     { year: 2015, count: 30 },
-    //     { year: 2016, count: 28 },
-    //   ];
-    //   new Chart(
-    //     document.getElementById('myCanva'),
-    //     {
-    //       type: 'bar',
-    //       data: {
-    //         labels: data.map(row => row.year),
-    //         datasets: [
-    //           {
-    //             label: 'Acquisitions by year',
-    //             data: data.map(row => row.count)
-    //           }
-    //         ]
-    //       }
-    //     }
-    //   );
-    // console.log(data2);
+export const createRandomCanvaScore = async (elementCanva) => {
+    let objDataCity = await dataCollection(casualCity)
+    console.log(objDataCity.scores);
+    const colors = []
+    const names = []
+    const scores = []
+    objDataCity.scores.forEach(el => {
+        colors.push(el.color)
+        names.push(el.name)
+        scores.push(Math.round(el.score_out_of_10))
+    })
+    const imgHeader = document.querySelector('.container-research')
+    imgHeader.style.backgroundImage = `url(${objDataCity.imgCity})` 
+    new Chart(elementCanva, {
+        type: 'bar',
+        data: {
+            labels: names,
+            datasets: [{
+                label: "Score",
+                data: scores, 
+                backgroundColor: colors,
+                borderWidth: 1,
+                borderColor: 'black',
+                hoverBorderWidth: 3,
+                hoverBorderColor: 'grey'
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Life Quality',
+                fontSize: 25
+            },
+            legend: {
+                display: true,
+                position: 'left'
+            }
+        }
+    })
 }
+
+export const createCanvaScoreByUser = async (elementCanva) => {
+    console.log('in ascolto');
+};
+
