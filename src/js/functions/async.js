@@ -1,14 +1,16 @@
 import axios from 'axios';
-import { getDataCity } from "./api-call"
+import { removeElements } from "./document"
+import { getDataCity, getCasualCity } from "./api-call"
+import { countriesNames } from './api-call';
 
 // la funzione restituisce un obj con i dati utili della città selezionata nella lista prodotta 
-export const dataCollection = async () => {
+export const dataCollection = async (value) => {
     // variabile contentente la lista delle città
-    let items = document.querySelectorAll('.list-items')
+    // let items = document.querySelectorAll('.list-items')
     // controllo del box text prima di iniziare l'analisi del valore inserito
-    if(items.length == 0 && input.value != ""){
+    if(countriesNames.includes(value)){
         // richiesta e attesa dati da parte dell'api
-        const requestAPI = await getDataCity(input.value)
+        const requestAPI = await getDataCity(value)
         input.value = ""
         // controllo response status
         if (requestAPI.status != 200 || requestAPI.request.readyState != 4){
@@ -58,13 +60,21 @@ export const dataCollection = async () => {
             dataFinal.finalScore = requestFinalScore.data["teleport_city_score"]
 
             // DA INSERIRE CODICE PER CHIAVE CITTA' SUBURBANE DA requestPrincipal.data //
-
+            console.log(dataFinal);
             return dataFinal
         }
     }
     else {
-        input.value = ""
-        return 'INSERIRE CODICE IN CASO DI INPUT NON VALIDO'
+        if(input.value.length == 0){
+            alert('INSERIRE UNA CITTA') // alert provvisorio
+        }
+        else{
+            removeElements()
+            input.value = ""
+            alert('valore errato') // alert provvisorio
+            // return 'INSERIRE CODICE IN CASO DI INPUT NON VALIDO'
+        }
+        
     }
 };
 
