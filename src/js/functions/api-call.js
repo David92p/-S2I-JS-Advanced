@@ -11,7 +11,7 @@ Object.keys(cities).forEach(city => {
 });
 
 // città generata casualmente dalla lista countriesNames
-const casualCity = countriesNames[Math.floor(Math.random() * 265)]
+export const casualCity = countriesNames[Math.floor(Math.random() * 265)]
 
 // link api
 const api = 'https://api.teleport.org/api/';
@@ -19,14 +19,14 @@ const api = 'https://api.teleport.org/api/';
 const API_KEY = process.env.API_KEY;
 
 // chiamata Api tramite valore di input
-export async function getDataCity(city) {
+export const getDataCity = async (city) => {
     const request = await axios.get(API_KEY+city)
     return request
 };
 
 // chiamata Api tramite valore casuale creato nello script
-export const getCasualCity = () => {
-    const citiesName = getDataCity(casualCity);
+export const getCasualCity = async () => {
+    const citiesName = await getDataCity(casualCity);
     return citiesName
 };
 
