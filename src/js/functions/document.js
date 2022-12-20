@@ -81,29 +81,6 @@ const displayNames = (value) => {
     removeElements()
 };
 
-// funzione di ricerca img città casuale inserita come sfondo header
-export const casualImgCity = () => {
-    getCasualCity()
-    .then(response => {
-        const request = axios.get(response.data._embedded["city:search-results"][0]._links['city:item'].href)
-        return request
-    })
-    .then(response => {
-        const linkData = response.data._links["city:urban_area"].href
-        const data = axios.get(linkData)
-        return data
-    })
-    .then(response => {
-        const linkData = response.data._links["ua:images"].href
-        const data = axios.get(linkData)
-        return data
-    })
-    .then(response => {
-        const element = document.querySelector('.container-research')
-        element.style.backgroundImage = `url(${response.data.photos[0].image.web})` 
-    })
-}
-
 export const createRandomCanvaScore = async (elementCanva) => {
     let objDataCity = await dataCollection(casualCity)
     console.log(objDataCity.scores);
@@ -115,8 +92,11 @@ export const createRandomCanvaScore = async (elementCanva) => {
         names.push(el.name)
         scores.push(Math.round(el.score_out_of_10))
     })
+    // inseriamo la foto della città come sfondo dell'intestazione
     const imgHeader = document.querySelector('.container-research')
     imgHeader.style.backgroundImage = `url(${objDataCity.imgCity})` 
+    
+    // dati canvas contenitore
     new Chart(elementCanva, {
         type: 'bar',
         data: {
@@ -143,7 +123,7 @@ export const createRandomCanvaScore = async (elementCanva) => {
             }
         }
     })
-}
+};
 
 export const createCanvaScoreByUser = async (elementCanva) => {
     console.log('in ascolto');
