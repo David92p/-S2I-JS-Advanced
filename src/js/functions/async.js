@@ -60,7 +60,6 @@ export const dataCollection = async (value) => {
             dataFinal.finalScore = requestFinalScore.data["teleport_city_score"]
 
             // DA INSERIRE CODICE PER CHIAVE CITTA' SUBURBANE DA requestPrincipal.data //
-            console.log(dataFinal);
             return dataFinal
         }
     }

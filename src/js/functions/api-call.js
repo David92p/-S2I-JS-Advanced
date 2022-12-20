@@ -14,7 +14,7 @@ Object.keys(cities).forEach(city => {
 export const casualCity = countriesNames[Math.floor(Math.random() * 265)]
 
 // link api
-const api = 'https://api.teleport.org/api/';
+//const api = 'https://api.teleport.org/api/cities/?search=';
 // environment variables
 const API_KEY = process.env.API_KEY;
 
