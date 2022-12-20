@@ -8,6 +8,7 @@ import { dataCollection } from "./async"
 import { countriesNames, casualCity } from './api-call';
 
 
+
 // La funzione estrapola una lista di città dalla lista "countriesNames" in base al valore inserito dall'utente
 const createListCities = (value) => {
     // convertiamo il valore inserito in valore minuscolo con lettera iniziale maiuscola
@@ -81,51 +82,82 @@ const displayNames = (value) => {
     removeElements()
 };
 
-export const createRandomCanvaScore = async (elementCanva) => {
-    let objDataCity = await dataCollection(casualCity)
-    console.log(objDataCity.scores);
-    const colors = []
-    const names = []
-    const scores = []
-    objDataCity.scores.forEach(el => {
-        colors.push(el.color)
-        names.push(el.name)
-        scores.push(Math.round(el.score_out_of_10))
-    })
+export const createCanvaCity = async (value) => {
+    let objDataCity = await dataCollection(value);
     // inseriamo la foto della città come sfondo dell'intestazione
     const imgHeader = document.querySelector('.container-research')
     imgHeader.style.backgroundImage = `url(${objDataCity.imgCity})` 
+    // inseriamo i dati relativi alla descrizione della città
+    const containerDescription = document.querySelector('.container-descriptions-city')
+    containerDescription.querySelectorAll('div').forEach(el => el.remove())
+    const titleContainer = document.createElement('div')
+    titleContainer.classList.add('title-container')
+    const title1 = document.createElement('h1')
+    const title2 = document.createElement('h3')
+    title1.innerText = `${objDataCity.name}`
+    title2.innerText = `${objDataCity.continent}`
+    titleContainer.append(title1)
+    titleContainer.append(title2)
+    if (objDataCity.mayor != undefined){
+        const mayor = document.createElement('p')
+        mayor.innerText = `The name of the city mayor is ${objDataCity.mayor}`
+        titleContainer.append(mayor)
+    }
+    containerDescription.append(titleContainer)
+    const summaryContainer = document.createElement('div')
+    summaryContainer.classList.add('summary-container')
+    summaryContainer.innerHTML = objDataCity.summary
     
-    // dati canvas contenitore
-    new Chart(elementCanva, {
-        type: 'bar',
-        data: {
-            labels: names,
-            datasets: [{
-                label: "Score",
-                data: scores, 
-                backgroundColor: colors,
-                borderWidth: 1,
-                borderColor: 'black',
-                hoverBorderWidth: 3,
-                hoverBorderColor: 'grey'
-            }]
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'Life Quality',
-                fontSize: 25
-            },
-            legend: {
-                display: true,
-                position: 'left'
-            }
-        }
-    })
+    containerDescription.append(summaryContainer)
+    console.log(containerDescription.childNodes);
+    console.log(objDataCity);
 };
 
-export const createCanvaScoreByUser = async (elementCanva) => {
-    console.log('in ascolto');
-};
+// export const createCanvaScore = async (canvas) => {
+//     let objDataCity = await dataCollection(casualCity)
+//     console.log(objDataCity.scores);
+//     const colors = []
+//     const names = []
+//     const scores = []
+//     objDataCity.scores.forEach(el => {
+//         colors.push(el.color)
+//         names.push(el.name)
+//         scores.push(Math.round(el.score_out_of_10))
+//     })
+//     // inseriamo la foto della città come sfondo dell'intestazione
+//     const imgHeader = document.querySelector('.container-research')
+//     imgHeader.style.backgroundImage = `url(${objDataCity.imgCity})` 
+    
+//     // dati canvas contenitore
+//     new Chart(elementCanva, {
+//         type: 'bar',
+//         data: {
+//             labels: names,
+//             datasets: [{
+//                 label: "Score",
+//                 data: scores, 
+//                 backgroundColor: colors,
+//                 borderWidth: 1,
+//                 borderColor: 'black',
+//                 hoverBorderWidth: 3,
+//                 hoverBorderColor: 'grey'
+//             }]
+//         },
+//         options: {
+//             title: {
+//                 display: true,
+//                 text: 'Life Quality',
+//                 fontSize: 25
+//             },
+//             legend: {
+//                 display: true,
+//                 position: 'left'
+//             }
+//         }
+//     })
+// };
+
+// export const createCanvaScoreByUser = async (elementCanva) => {
+//     console.log('in ascolto');
+// };
 
