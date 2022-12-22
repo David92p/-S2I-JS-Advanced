@@ -1,6 +1,5 @@
 import axios from 'axios';
-// import Chart from 'chart.js/auto'; //lib utile per grafico di dati della
-const _ = require('lodash')
+
 import cities from '../../json/citylist.json'
 
 // const 
@@ -14,13 +13,13 @@ Object.keys(cities).forEach(city => {
 export const casualCity = countriesNames[Math.floor(Math.random() * 265)]
 
 // link api
-//const api = 'https://api.teleport.org/api/cities/?search=';
+const api = 'https://api.teleport.org/api/cities/?search=';
 // environment variables
 const API_KEY = process.env.API_KEY;
 
 // chiamata Api tramite valore di input
 export const getDataCity = async (city) => {
-    const request = await axios.get(API_KEY+city)
+    const request = await axios.get(api+city)
     return request
 };
 

@@ -44,7 +44,7 @@ const createListCities = (value) => {
         })
     }
     return citiesSelected.slice(0,5)
-}
+};
 
 
 // La funzione effettua una chiamata all'api tramite un valore inserito dall'utente
@@ -83,34 +83,48 @@ const displayNames = (value) => {
 };
 
 export const createCanvaCity = async (value) => {
-    let objDataCity = await dataCollection(value);
-    // inseriamo la foto della città come sfondo dell'intestazione
-    const imgHeader = document.querySelector('.container-research')
-    imgHeader.style.backgroundImage = `url(${objDataCity.imgCity})` 
-    // inseriamo i dati relativi alla descrizione della città
-    const containerDescription = document.querySelector('.container-descriptions-city')
-    containerDescription.querySelectorAll('div').forEach(el => el.remove())
-    const titleContainer = document.createElement('div')
-    titleContainer.classList.add('title-container')
-    const title1 = document.createElement('h1')
-    const title2 = document.createElement('h3')
-    title1.innerText = `${objDataCity.name}`
-    title2.innerText = `${objDataCity.continent}`
-    titleContainer.append(title1)
-    titleContainer.append(title2)
-    if (objDataCity.mayor != undefined){
-        const mayor = document.createElement('p')
-        mayor.innerText = `The name of the city mayor is ${objDataCity.mayor}`
-        titleContainer.append(mayor)
+    try {
+        let objDataCity = await dataCollection(value);
+        // inseriamo la foto della città come sfondo dell'intestazione
+        const imgHeader = document.querySelector('.container-research')
+        imgHeader.style.backgroundImage = `url(${objDataCity.imgCity})`
+        // inseriamo i dati relativi alla descrizione della città
+        const containerDescription = document.querySelector('.container-descriptions-city')
+        containerDescription.querySelectorAll('div').forEach(el => el.remove())
+        const titleContainer = document.createElement('div')
+        titleContainer.classList.add('title-container')
+        let title = `<h1>${objDataCity.name}</h1><h3>Continent: ${objDataCity.continent}</h3>`
+        if (objDataCity.mayor != undefined){
+                title += `<p>The name of the city mayor is <b>${objDataCity.mayor}</b></p>`
+            }
+        titleContainer.innerHTML = title
+        containerDescription.append(titleContainer)
+        const summaryContainer = document.createElement('div')
+        summaryContainer.classList.add('summary-container')
+        summaryContainer.innerHTML = objDataCity.summary
+        containerDescription.append(summaryContainer)
     }
-    containerDescription.append(titleContainer)
-    const summaryContainer = document.createElement('div')
-    summaryContainer.classList.add('summary-container')
-    summaryContainer.innerHTML = objDataCity.summary
-    
-    containerDescription.append(summaryContainer)
-    console.log(containerDescription.childNodes);
-    console.log(objDataCity);
+    catch {
+        if(input.value != ""){
+            removeElements()
+            input.value = ""
+            const message = document.querySelector('.danger')
+            message.innerText = "Wrong Value"
+            message.style.display = 'block'
+        }
+        else if (!countriesNames.includes(value)) {
+            removeElements()
+            input.value = ""
+            const message = document.querySelector('.danger')
+            message.innerText = "Enter a city in the search box"
+            message.style.display = 'block'
+        }
+        
+        setTimeout(() => {
+            const message = document.querySelector('.danger')
+            message.style.display = 'none'
+        },3000)
+    }
 };
 
 // export const createCanvaScore = async (canvas) => {
