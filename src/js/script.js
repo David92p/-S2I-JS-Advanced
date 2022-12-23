@@ -7,7 +7,7 @@ const btnSearch = document.querySelector('.btn-search');
 const btnScores = document.querySelector('.btn-scores');
 const btnDetails = document.querySelector('.btn-details');
 const btnSalaries = document.querySelector('.btn-salaries')
-const myCanva = document.querySelector("#my-canva").getContext('2d')
+//const myCanva = document.querySelector("#my-canva").getContext('2d')
 
 // inputCreateList()
 input.addEventListener("keyup", inputCreateList);
