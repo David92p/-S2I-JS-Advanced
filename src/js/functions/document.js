@@ -103,6 +103,25 @@ export const createCanvaCity = async (value) => {
         summaryContainer.classList.add('summary-container')
         summaryContainer.innerHTML = objDataCity.summary
         containerDescription.append(summaryContainer)
+        const containerTotalScore = document.querySelector('.container-total-score')
+        while (containerTotalScore.firstChild) {
+            containerTotalScore.removeChild(containerTotalScore.firstChild);
+        }
+        const parTotalScore = document.createElement('p')
+        const totalScore = document.createElement('div')
+        parTotalScore.innerText = 'Total Score: '
+        totalScore.innerText = Math.round(objDataCity.finalScore)
+        containerTotalScore.append(parTotalScore)
+        containerTotalScore.append(totalScore)
+
+        const containerCanva = document.querySelector('.container-canva')
+        while (containerCanva.firstChild) {
+            containerCanva.removeChild(containerCanva.firstChild);
+        }
+        const canvas = document.createElement('canvas')
+        canvas.classList.add('my-canva')
+        createCanvaScore(canvas, objDataCity)
+        containerCanva.append(canvas)
     }
     catch {
         if(input.value != ""){
@@ -127,51 +146,45 @@ export const createCanvaCity = async (value) => {
     }
 };
 
-// export const createCanvaScore = async (canvas) => {
-//     let objDataCity = await dataCollection(casualCity)
-//     console.log(objDataCity.scores);
-//     const colors = []
-//     const names = []
-//     const scores = []
-//     objDataCity.scores.forEach(el => {
-//         colors.push(el.color)
-//         names.push(el.name)
-//         scores.push(Math.round(el.score_out_of_10))
-//     })
-//     // inseriamo la foto della città come sfondo dell'intestazione
-//     const imgHeader = document.querySelector('.container-research')
-//     imgHeader.style.backgroundImage = `url(${objDataCity.imgCity})` 
-    
-//     // dati canvas contenitore
-//     new Chart(elementCanva, {
-//         type: 'bar',
-//         data: {
-//             labels: names,
-//             datasets: [{
-//                 label: "Score",
-//                 data: scores, 
-//                 backgroundColor: colors,
-//                 borderWidth: 1,
-//                 borderColor: 'black',
-//                 hoverBorderWidth: 3,
-//                 hoverBorderColor: 'grey'
-//             }]
-//         },
-//         options: {
-//             title: {
-//                 display: true,
-//                 text: 'Life Quality',
-//                 fontSize: 25
-//             },
-//             legend: {
-//                 display: true,
-//                 position: 'left'
-//             }
-//         }
-//     })
-// };
+const createCanvaScore = async (canvas, objData) => {
+    const colors = []
+    const names = []
+    const scores = []
+    objData.scores.forEach(el => {
+        colors.push(el.color)
+        names.push(el.name)
+        scores.push(Math.round(el.score_out_of_10))
+    })
+    // dati canvas contenitore
+    new Chart(canvas, {
+        type: 'bar',
+        data: {
+            labels: names,
+            datasets: [{
+                label: "Score",
+                data: scores, 
+                backgroundColor: colors,
+                borderWidth: 1,
+                borderColor: 'black',
+                hoverBorderWidth: 3,
+                hoverBorderColor: 'grey'
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Life Quality',
+                fontSize: 25
+            },
+            legend: {
+                display: true,
+                position: 'left'
+            }
+        }
+    })
+};
 
-// export const createCanvaScoreByUser = async (elementCanva) => {
-//     console.log('in ascolto');
-// };
+const createCanvasSalaries = () => {
+
+}
 
