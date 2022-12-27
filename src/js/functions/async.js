@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { removeElements } from "./document"
+
 import { getDataCity } from "./api-call"
 import { countriesNames } from './api-call';
 
@@ -30,12 +30,6 @@ export const dataCollection = async (value) => {
                 dataFinal.name = requestPrincipal.data.full_name
                 dataFinal.continent = requestPrincipal.data.continent
                 dataFinal.mayor = requestPrincipal.data.mayor
-                // link api per dettagli città (lavoro, clima, sanità ecc)
-                const linkDetailsCity = requestPrincipal.data._links["ua:details"].href
-                // richiesta dati
-                const requestDetailsCity = await axios.get(linkDetailsCity)
-                // inseriamo i dati dei dettagli della città all'interno del obj finale 
-                dataFinal.detailsCity = requestDetailsCity.data["categories"]
                 // link api per foto città
                 const linkImgCity = requestPrincipal.data._links["ua:images"].href
                 // richiesta dati
@@ -57,7 +51,6 @@ export const dataCollection = async (value) => {
                 dataFinal.summary = requestFinalScore.data["summary"]
                 dataFinal.finalScore = requestFinalScore.data["teleport_city_score"]
     
-                // DA INSERIRE CODICE PER CHIAVE CITTA' SUBURBANE DA requestPrincipal.data //
                 return dataFinal
             }
         }
@@ -66,24 +59,6 @@ export const dataCollection = async (value) => {
         const message = document.querySelector('.danger')
         message.innerText = "City data not yet available"
         message.style.display = 'block'
-        // if(input.value.length == 0){
-        //     const message = document.querySelector('.danger')
-        //     message.innerText = "Wrong Value"
-        //     message.style.display = 'block'
-        // }
-        // else{
-        //     removeElements()
-        //     input.value = ""
-        //     const message = document.querySelector('.danger')
-        //     message.innerText = "Enter a city in the search box"
-        //     message.style.display = 'block'
-        // }
     }
-    // controllo del box text prima di iniziare l'analisi del valore inserito
-    
-     
 };
-
-
-
 
