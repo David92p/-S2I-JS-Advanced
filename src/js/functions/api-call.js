@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import cities from '../../json/citylist.json'
 
-// const 
+
 export const countriesNames = []
 // cicliamo il Json per avere una lista di nome delle città
 Object.keys(cities).forEach(city => {
@@ -21,10 +21,6 @@ export const getDataCity = async (city) => {
     return request
 };
 
-// chiamata Api tramite valore casuale creato nello script
-// export const getCasualCity = async () => {
-//     const citiesName = await getDataCity(casualCity);
-//     return citiesName
-// };
+
 
 
