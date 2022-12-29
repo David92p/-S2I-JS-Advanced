@@ -61,6 +61,7 @@ body {
         background-repeat: no-repeat;
         background-size: cover;
         padding-bottom: 15px;
+        margin: 0 10px 0 10px
     }
 
         form {
@@ -102,6 +103,7 @@ body {
                 background: rgba(255, 255, 255, 1);
                 outline: none;
                 border-radius: 20px 0px 0px 20px;
+                margin-left: 10px;
             }
 
             ul {
@@ -154,6 +156,7 @@ body {
 .container-main {
     display: flex;
     background: #e5e4e2;
+    height: auto;
 }
 
     .container-informations-city {
@@ -168,7 +171,8 @@ body {
         .container-descriptions-city {
             display: flex;
             flex-direction: column;
-
+            justify-content: center;
+            align-items: center;
             height: 80%;
             width: 100%;
         }
@@ -177,7 +181,7 @@ body {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                margin-bottom: 20px;
+                justify-content: center;
             }
 
                 .title-container h1 {
@@ -200,16 +204,18 @@ body {
             .summary-container {
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
-                margin: 30px;
+                padding: 15px;
+                height: 100%;
+                width: 100%;
             }
 
                 .summary-container p {
-                    display: block;
                     text-align: justify;
                     letter-spacing: 2px;
-                    line-height: 1;
-                    margin-top: 10px;
+                }
+
+                .summary-container :first-child{
+                    margin-bottom: 10px;
                 }
             
         .container-btn-informations {
@@ -282,7 +288,7 @@ body {
             align-items: center;
             height: 70%;
             width: 100%;
-            padding: 0 10px 0 10px;
+            padding: 0 5px 0 5px;
         }
 
 
@@ -293,13 +299,77 @@ body {
 /****************************************************************************************************/
 
 .container-footer {
-    height: 100px;
-    width: 100%;
-    background-color: #552e5a
-}
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-/* @media screen and (max-width: 768px) {
-    .cards {
+    
+    background-color: #552e5a;
+}   
+
+    .my-text-footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50px;
+    }
+
+    .my-text-footer img{
+        margin-left: 10px;
+    }
+
+
+/****************************************************************************************************/
+/********************************************* @media ***********************************************/
+/****************************************************************************************************/  
+/* Smartphone */
+@media screen and (max-width: 400px) {
+
+    .container-research {
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+    }
+        input[type="text"] {
+            border-radius: 10px;
+            margin-bottom: 5px;
+        }
+
+        .btn-search {
+            height: 1.5em;
+            width: 4em;
+            border-radius: 10px;
+            font-size: 2em;
+        }
+
+        .message .danger {
+            font-size: 16px;
+            margin-bottom: 7px;
+        }
+
+    .container-main {
+        display: flex;
         flex-direction: column;
     }
-} */
+
+        .container-informations-city{
+            width: 100%;
+            margin-top: 30px;
+        }
+
+            .title-container {
+                width: 100%;
+            }
+
+            .summary-container {    
+                width: 90%;
+            }
+
+        .container-data {
+            width: 100%;
+        }
+    
+    .my-text-footer {
+        font-size: 10px;
+    }
+}
