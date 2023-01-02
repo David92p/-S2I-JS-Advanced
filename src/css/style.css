@@ -93,7 +93,7 @@ body {
                     display: none;
                 }   
 
-            input[type="text"]{
+            input {
                 width: 100%;
                 padding: 15px 10px;
                 border: none;
