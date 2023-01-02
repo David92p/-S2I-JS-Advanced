@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "serv": "webpack server",
-    "netlify": "netlify-cli"
+    "serv": "webpack server"
   },
   "repository": {
     "type": "git",
