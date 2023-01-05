@@ -9,7 +9,7 @@
 #### City ​​search web application with final score and wages
 
 
-![App Screenshot](https://github.com/David92p/-S2I-JS-Advanced/blob/main/ScreenShot/first-screen.PNG)
+![App Screenshot](https://github.com/David92p/-S2I-JS-Advanced/blob/main/ScreenShot/first-screen.PNG=468x300)
 
 
 ## What can we know about the wanted cities?
