@@ -14,9 +14,9 @@
 
 ## What can we know about the wanted cities?
 
-![App Screenshot](https://via.placeholder.com/368x200?text=App+Screenshot+Here)
+![App Screenshot](https://github.com/David92p/-S2I-JS-Advanced/blob/main/ScreenShot/second-screen.PNG/368x200?text=App+Screenshot+Here)
 
-![App Screenshot](https://via.placeholder.com/368x200?text=App+Screenshot+Here)
+![App Screenshot](https://github.com/David92p/-S2I-JS-Advanced/blob/main/ScreenShot/third-screen.PNG/368x200?text=App+Screenshot+Here)
 
 
 #### When we have selected our favorite city, we can find information regarding scores and salaries
