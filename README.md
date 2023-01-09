@@ -68,4 +68,5 @@ Install -S2I-JS-Advanced
 
 ##### Thank you for your dedicated attention, a warm greeting :heart:
 <br>
-##### Project published under [MIT](https://choosealicense.com/licenses/mit/) license
+
+###### Project published under [MIT](https://choosealicense.com/licenses/mit/) license
