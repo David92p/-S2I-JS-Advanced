@@ -62,10 +62,10 @@ Install -S2I-JS-Advanced
 * [Teleport Public APIS](https://developers.teleport.org/api/)
 <br>
 
-##### If you find it interesting, try the service at the following link [CountryApp](mycountrys2i.netlify.app)
+##### If you find it interesting, try the service at the following link [CountryApp](https://mycountrys2i.netlify.app/)
 
 ##### If you want to contribute to the improvement of the project or have any questions about it, please contact me at [dave.panetta92@gmail.com](dave.panetta92@gmail.com) or use linkedin at the following [link](https://www.linkedin.com/in/davide-panetta/)
 
 ##### Thank you for your dedicated attention, a warm greeting :heart:
 <br>
-##### Project published under [MIT](https://choosealicense.com/licenses/mit) license
+##### Project published under [MIT](https://choosealicense.com/licenses/mit/) license
