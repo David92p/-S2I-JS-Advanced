@@ -1,11 +1,6 @@
 
 # My Country App
 
-
-
-
-
-
 #### City ​​search web application with final score and wages
 
 
@@ -62,6 +57,15 @@ Install -S2I-JS-Advanced
 
 * [Webpack 5](https://webpack.js.org/)
 
-## External Service
+## External Service :incoming_envelope:
 
 * [Teleport Public APIS](https://developers.teleport.org/api/)
+<br>
+
+#####If you find it interesting, try the service at the following link [CountryApp](https://www.mycountrys2i.netlify.app)
+
+#####If you want to contribute to the improvement of the project or have any questions about it, please contact me at [dave.panetta92@gmail.com](dave.panetta92@gmail.com) or use linkedin at the following [link](https://www.linkedin.com/in/davide-panetta/)
+
+#####Thank you for your dedicated attention, a warm greeting :heart:
+<br>
+######Project published under [MIT](https://choosealicense.com/licenses/mit/) license
