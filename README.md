@@ -47,9 +47,21 @@ Install -S2I-JS-Advanced
   npm install 
   npm run build
 ```
-
-
-
 ## Languages :computer:
 
+* HTML5
+* CSS3
+* Javascript ES6
 
+## Libraries :books:
+
+* [Axios](https://axios-http.com/)
+* [Chart.js](https://www.chartjs.org/)
+  
+## Bundler :package:
+
+* [Webpack 5](https://webpack.js.org/)
+
+## External Service
+
+* [Teleport Public APIS](https://developers.teleport.org/api/)
